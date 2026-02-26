@@ -1,3 +1,6 @@
+from math import log
+import numpy as np
+import matplotlib.pyplot as plt
 import timeit
 
 class General:
@@ -60,5 +63,10 @@ class ListFunctions:
     def list2(n):
         return range(n)
 
-General().functions_comparison(SumFunctions.sum1, SumFunctions.sum2, 10)
-General().functions_comparison(ListFunctions.list1, ListFunctions.list2, 10)
+def linspace_test():
+    n = np.linspace(1, 10, 100)     
+    print('test')   
+
+# General().functions_comparison(SumFunctions.sum1, SumFunctions.sum2, 10)
+# General().functions_comparison(ListFunctions.list1, ListFunctions.list2, 10)
+linspace_test()
