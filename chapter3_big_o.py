@@ -65,8 +65,15 @@ class ListFunctions:
 
 def linspace_test():
     n = np.linspace(1, 10, 100)     
-    print('test')   
+    labels = ['Constant', 'Logarithmic', 'Linear', 'Log Linear', 'Quadratic', 'Cubic', 'Exponential']
+    big_o = [np.ones(n.shape), np.log(n), n, n * np.log(n), n**2, n**3, 2**n]
+    plt.figure(figsize=(10, 8))
+    plt.ylim(0, 100)
+    plt.plot(n, big_o[0], label=labels[0])
+    plt.show()
+    print('test')
 
 # General().functions_comparison(SumFunctions.sum1, SumFunctions.sum2, 10)
 # General().functions_comparison(ListFunctions.list1, ListFunctions.list2, 10)
 linspace_test()
+    
