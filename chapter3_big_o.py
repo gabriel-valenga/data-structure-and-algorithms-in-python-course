@@ -69,11 +69,51 @@ def linspace_test():
     big_o = [np.ones(n.shape), np.log(n), n, n * np.log(n), n**2, n**3, 2**n]
     plt.figure(figsize=(10, 8))
     plt.ylim(0, 100)
-    plt.plot(n, big_o[0], label=labels[0])
+    for i in range(len(big_o)):
+        plt.plot(n, big_o[i], label=labels[i])
+    plt.legend()
+    plt.ylabel('Run time')
+    plt.xlabel('Input size (n)')
     plt.show()
     print('test')
 
+list_example = [1, 2, 3, 4, 5]
+
+def constant_function(n): # O(1) because the number of steps is constant and does not grow with n
+    print(n[0])
+    
+
+def linear_function(n): # O(n) because the number of steps grows linearly with n
+    for i in range(n):
+        print(i)
+
+
+def quadratic_function(n): # O(n^2) because the number of steps grows quadratically with n
+    for i in range(n):
+        for j in range(n):
+            print(i, j)
+
+
+def test_combination(n): # O(1) + O(5) + O(n) + O(1) + O(1) + O(1) = O(n) because n is the dominant term because n its an infinite variable and the other terms are constants
+    # O(1)
+    print(n[0])
+
+    # O(5)
+    for i in range(5):
+        print('test', i)
+
+    # O(n)
+    for i in n:
+        print(i)
+
+    # O(1)
+    print('Python')
+    # O(1)
+    print('Python')
+    # O(1)
+    print('Python')
+
 # General().functions_comparison(SumFunctions.sum1, SumFunctions.sum2, 10)
 # General().functions_comparison(ListFunctions.list1, ListFunctions.list2, 10)
-linspace_test()
-    
+# linspace_test()
+test_combination(list_example)    
