@@ -1,6 +1,6 @@
 import numpy as np
 
-class UnsortedArrays:
+class UnsortedArray:
 
     def __init__(self, size):
         self.size = size
@@ -44,7 +44,7 @@ class UnsortedArrays:
             self.last_position -= 1
 
 
-test_array = UnsortedArrays(5)
+test_array = UnsortedArray(5)
 test_array.print_values()
 test_array.insert(3)
 test_array.insert(5)
