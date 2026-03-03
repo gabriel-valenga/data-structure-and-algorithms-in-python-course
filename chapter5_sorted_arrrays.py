@@ -17,6 +17,7 @@ class SortedArray:
                 print(i, " - ", self.values[i])
             print()
 
+
     #O(n)
     def insert(self, value):
         if self.last_position == self.size - 1: #O(1)
@@ -37,6 +38,42 @@ class SortedArray:
             self.last_position += 1
 
 
+    #O(n)
+    def linear_search(self, value):
+        for i in range(self.last_position + 1):
+            if self.values[i] > value:
+                return -1
+            if self.values[i] == value:
+                return i
+            if i == self.last_position:
+                return -1
+            
+
+    #O(log n)
+    def binary_search(self, value):
+        left = 0
+        right = self.last_position
+        while left <= right:
+            middle = (left + right) // 2
+            if self.values[middle] == value:
+                return middle
+            elif self.values[middle] < value:
+                left = middle + 1
+            else:
+                right = middle - 1
+        return -1
+
+    #O(n)
+    def delete(self, value):
+        position = self.linear_search(value)
+        if position == -1:
+            print("Value not found")
+        else:
+            for i in range(position, self.last_position):
+                self.values[i] = self.values[i + 1]
+            self.last_position -= 1
+
+
 test_array = SortedArray(10)
 test_array.print_values()
 test_array.insert(6)
@@ -51,3 +88,21 @@ test_array.insert(1)
 test_array.print_values() 
 test_array.insert(8)
 test_array.print_values()   
+print(test_array.linear_search(8))
+print(test_array.linear_search(2))
+print(test_array.linear_search(3))
+print(test_array.linear_search(9))
+
+print(test_array.binary_search(8))
+print(test_array.binary_search(2))
+print(test_array.binary_search(3))
+print(test_array.binary_search(9))
+print('deleting 5')
+test_array.delete(5)
+test_array.print_values()
+print('deleting 1')
+test_array.delete(1)
+test_array.print_values()
+print('deleting 8') 
+test_array.delete(8)
+test_array.print_values()
