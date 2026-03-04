@@ -8,6 +8,10 @@ class SortedArray:
         self.values = np.empty(self.size, dtype=int)
 
 
+    def __str__(self):
+        return str(self.values[:self.last_position + 1])
+
+
     #O(n)    
     def print_values(self):
         if self.last_position == -1:
