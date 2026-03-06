@@ -1,4 +1,5 @@
 from random import random
+import timeit
 from chapter4_unsorted_arrays import UnsortedArray
 from chapter5_sorted_arrrays import SortedArray
 from general_use import functions_comparison
@@ -8,6 +9,11 @@ class CompareSortedAndUnsortedArrays:
 
     def __init__(self):
         self.list_of_values = []
+        self.sorted_array = None
+        self.unsorted_array = None
+        self.fill_list_of_values()
+        self.insert_a_list_of_values_in_sorted_array()
+        self.insert_a_list_of_values_in_unsorted_array()
 
 
     def fill_list_of_values(self):
@@ -22,27 +28,25 @@ class CompareSortedAndUnsortedArrays:
 
 
     def insert_a_list_of_values_in_sorted_array(self) -> SortedArray:
-        sorted_array = SortedArray(len(self.list_of_values))
-        return self.insert_a_list_of_values(sorted_array)
+        self.sorted_array = SortedArray(len(self.list_of_values))
+        return self.insert_a_list_of_values(self.sorted_array)
 
 
     def insert_a_list_of_values_in_unsorted_array(self) -> UnsortedArray:
-        unsorted_array = UnsortedArray(len(self.list_of_values))
-        return self.insert_a_list_of_values(unsorted_array)
+        self.unsorted_array = UnsortedArray(len(self.list_of_values))
+        return self.insert_a_list_of_values(self.unsorted_array)
     
 
     def search_a_list_of_values_in_sorted_array_using_binary_search(self, list_of_values_to_search:list):
-        sorted_array = self.insert_a_list_of_values_in_sorted_array()
         for value in list_of_values_to_search:
-            sorted_array.binary_search(value)
-        return sorted_array
+            self.sorted_array.binary_search(value)
+        return self.sorted_array
     
 
     def search_a_list_of_values_in_unsorted_array_using_linear_search(self, list_of_values_to_search:list):
-        unsorted_array = self.insert_a_list_of_values_in_unsorted_array()
         for value in list_of_values_to_search:
-            unsorted_array.search(value)
-        return unsorted_array
+            self.unsorted_array.search(value)
+        return self.unsorted_array
 
     
 
