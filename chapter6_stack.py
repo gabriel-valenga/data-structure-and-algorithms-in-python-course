@@ -45,24 +45,51 @@ class Stack:
             return self.__values[self.__top]
         
 
-stack = Stack(5)
-print(stack.top())
-stack.push_value(1)
-print(stack.top())
-stack.push_value(2)
-stack.push_value(3)
-stack.push_value(4)
-stack.push_value(5)
-stack.push_value(6)
-print(stack.top())
-stack.pop_value_from_the_top()
-print(stack.top())
-stack.pop_value_from_the_top()
-print(stack.top())
-stack.pop_value_from_the_top()
-print(stack.top())
-stack.pop_value_from_the_top()
-print(stack.top())
-stack.pop_value_from_the_top()
-print(stack.top())
-stack.pop_value_from_the_top()
+def example_one():
+    stack = Stack(5)
+    print(stack.top())
+    stack.push_value(1)
+    print(stack.top())
+    stack.push_value(2)
+    stack.push_value(3)
+    stack.push_value(4)
+    stack.push_value(5)
+    stack.push_value(6)
+    print(stack.top())
+    stack.pop_value_from_the_top()
+    print(stack.top())
+    stack.pop_value_from_the_top()
+    print(stack.top())
+    stack.pop_value_from_the_top()
+    print(stack.top())
+    stack.pop_value_from_the_top()
+    print(stack.top())
+    stack.pop_value_from_the_top()
+    print(stack.top())
+    stack.pop_value_from_the_top()
+
+
+class ExerciseOneExpressionMatcher:
+
+    def __init__(self, expression):
+        self.expression = expression
+        self.list_of_expression_characters = list(expression)
+
+    def expression_matcher(self):
+        expression_delimiter_characters = '{([])}'
+        expression_delimiter_characters_pairs = {
+            '{': '}',
+            '[': ']',
+            '(': ')'
+        }
+        check_expression_delimiters_stack = Stack(len(self.list_of_expression_characters))
+        for charactere in self.list_of_expression_characters:
+            if charactere in expression_delimiter_characters:
+                check_expression_delimiters_stack.push_value(charactere)
+        for delimiter in check_expression_delimiters_stack:
+
+
+
+    
+
+    
