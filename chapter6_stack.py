@@ -87,47 +87,33 @@ class ExerciseOneExpressionMatcher:
         self.expression = expression
         self.list_of_expression_characters = list(expression)
 
+
     def expression_matcher(self):
-        expression_delimiter_characters = '{([])}'
+        open_delimiters = '{(['
         close_delimiters = '}])'
         expression_delimiter_characters_pairs = {
            '}':'{',
            ']':'[',
            ')':'('
         }
-        check_expression_delimiters_stack = Stack(len(self.list_of_expression_characters), type=type) 
-        current_close_delimiter = None
-        for charactere in self.list_of_expression_characters:
-            if charactere in expression_delimiter_characters:
-                check_expression_delimiters_stack.push_value(charactere)
-        check_expression_delimiters_stack_copy = check_expression_delimiters_stack.copy()
-        for delimiter in reversed(check_expression_delimiters_stack_copy): #browse the copy stack, remove from original stack
-            if delimiter is None:
-                continue
-            current_open_delimiter = check_expression_delimiters_stack.top() 
-            if delimiter in close_delimiters:
-                current_close_delimiter = delimiter
-            if current_close_delimiter is None:
-                continue
-            if current_open_delimiter is not None: #here in this block below you have to change the logic trading open_delimiter and close_delimiter
-                if current_close_delimiter is None:
-                    print('Error in expression: open delimiter without close delimiter')
-                    return 
+        expression_open_delimiters_stack = Stack(size=len(self.expression), type=str)
+        for charactere in self.expression:
+            if charactere in open_delimiters:
+                expression_open_delimiters_stack.push_value(charactere)
+            if charactere in close_delimiters:
+                correct_open_delimiter = expression_delimiter_characters_pairs.get(charactere)
+                if expression_open_delimiters_stack.top() == correct_open_delimiter:
+                    expression_open_delimiters_stack.pop_value_from_the_top()
                 else:
-                    correct_open_delimiter = expression_delimiter_characters_pairs.get(current_close_delimiter)
-                    if current_open_delimiter != correct_open_delimiter:
-                        print('Error in expression: wrong open delimiter')
-                        return
-        print('The expression is correct!')    
+                    print('Error: invalid expression!')
+                    return
+        print('Success: valid expression!')
+
             
-
-
-
 exercise_one = ExerciseOneExpressionMatcher(expression='a{b(c[d]e)f}', type=str)
 exercise_one.expression_matcher()
 exercise_one = ExerciseOneExpressionMatcher(expression='a{b(cd]e)f}', type=str)
 exercise_one.expression_matcher()
+exercise_one = ExerciseOneExpressionMatcher(expression='ab(c[d]e)f}', type=str)
+exercise_one.expression_matcher()
 
-    
-
-    
