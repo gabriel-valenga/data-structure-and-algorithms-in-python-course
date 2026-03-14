@@ -109,7 +109,7 @@ class ExerciseOneExpressionMatcher:
                     return
         print('Success: valid expression!')
 
-            
+example_one()          
 exercise_one = ExerciseOneExpressionMatcher(expression='a{b(c[d]e)f}', type=str)
 exercise_one.expression_matcher()
 exercise_one = ExerciseOneExpressionMatcher(expression='a{b(cd]e)f}', type=str)
