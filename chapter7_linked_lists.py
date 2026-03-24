@@ -30,6 +30,18 @@ class LinkedList():
             current = current.next
 
 
+    def search(self, value_to_search):
+        if self.list_is_empty():
+            return
+        current = self.first
+        while current.value != value_to_search:
+            if current.next == None: #end of list
+                return None
+            else:
+                current = current.next
+        return current
+
+
     def delete_from_start(self):
         if self.list_is_empty():
             return
@@ -63,6 +75,7 @@ print(test_list.first)
 test_list.insert_at_start(4)
 print(test_list.first)
 test_list.show()
+print(test_list.search(3).value)
 print(test_list.first.next.next.next.next.next)
 print(test_list.first.next.next.next.next)
 print(test_list.first.next.next.next)
@@ -83,4 +96,5 @@ test_list.show()
 print()
 test_list.delete_from_start()
 test_list.show()
+print(test_list.search(3).value)
 
