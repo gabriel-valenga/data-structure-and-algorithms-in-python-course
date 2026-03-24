@@ -45,10 +45,27 @@ class LinkedList():
     def delete_from_start(self):
         if self.list_is_empty():
             return
-        temp = self.first
-        
+        temp = self.first    
         self.first = self.first.next
         return temp
+    
+
+    def delete_value_from_list(self, value):
+        if self.list_is_empty():
+            return
+        current = self.first 
+        previous = self.first
+        while current.value != value:
+            if current.next == None:
+                return None
+            else:
+                previous = current
+                current = current.next
+        if current == self.first:
+            current = self.delete_from_start()
+        else:
+            previous.next = current.next
+        return current
     
 
     def list_is_empty(self):
@@ -82,7 +99,10 @@ print(test_list.first.next.next.next)
 print(test_list.first.next.next)
 print(test_list.first.next)
 print(test_list.first)
-test_list.delete_from_start()
+test_list.delete_value_from_list(4)
+test_list.show()
+print()
+test_list.delete_value_from_list(3)
 test_list.show()
 print()
 test_list.delete_from_start()
@@ -96,5 +116,6 @@ test_list.show()
 print()
 test_list.delete_from_start()
 test_list.show()
-print(test_list.search(3).value)
+search = test_list.search(3)
+print(search.value if search is not None else '3 Not Found' )
 
