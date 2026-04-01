@@ -55,6 +55,43 @@ class DoublyLinkedList:
             current = current.previous
 
 
+    def delete_from_start(self):
+        temp = self.first
+        if self.first.next == None:
+            self.last = None
+        else:
+            self.first.next.previous = None
+        self.first = self.first.next
+        return temp
+    
+
+    def delete_from_end(self):
+        temp = self.last
+        if self.first.next == None:
+            self.first = None
+        else:
+            self.last.previous.next = None
+        self.last = self.last.previous
+        return temp
+
+
+    def delete_value_from_list(self, value):
+        current = self.first
+        while current.value != value:
+            current = current.next
+            if current == None:
+                return None
+        if current == self.first:
+            self.first = current.next
+        else:
+            current.previous.next = current.next
+        if current == self.last:
+            self.last = current.previous
+        else:
+            current.next.previous = current.previous
+        return current
+    
+
 test_list = DoublyLinkedList()
 test_list.insert_at_start(1)
 test_list.insert_at_start(2)
@@ -68,4 +105,15 @@ print()
 test_list.insert_at_start(5)
 test_list.show_values_from_start_to_end()
 print()
+print(f'last value: {test_list.last.value}')
+test_list.delete_from_end()
+print(f'last value: {test_list.last.value}')
+print()
+print(f'first value: {test_list.first.value}')
+print()
+test_list.delete_from_start()
+print(f'first value: {test_list.first.value}')
 test_list.show_values_from_end_to_start()
+print()
+test_list.delete_value_from_list(1)
+test_list.show_values_from_start_to_end()
