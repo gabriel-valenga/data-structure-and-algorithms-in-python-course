@@ -10,14 +10,14 @@ class Stack:
         self.__values = np.empty(size, dtype=type)
 
 
-    def __stack_is_full(self):
+    def stack_is_full(self):
         if self.__top == self.__size - 1:
             return True
         else:
             return False
     
 
-    def __stack_is_empty(self):
+    def stack_is_empty(self):
         if self.__top == -1:
             return True
         else:
@@ -25,7 +25,7 @@ class Stack:
         
 
     def push_value(self, value):
-        if self.__stack_is_full():
+        if self.stack_is_full():
             print("Stack is full. Cannot push value.")
         else:
             self.__top += 1
@@ -33,14 +33,14 @@ class Stack:
 
 
     def pop_value_from_the_top(self):
-        if self.__stack_is_empty():
+        if self.stack_is_empty():
             print("Stack is empty. Cannot pop value.")
         else:
             self.__top -= 1
         
 
     def top(self):
-        if self.__stack_is_empty():
+        if self.stack_is_empty():
             return -1
         else:
             return self.__values[self.__top]
@@ -109,11 +109,15 @@ class ExerciseOneExpressionMatcher:
                     return
         print('Success: valid expression!')
 
-example_one()          
-exercise_one = ExerciseOneExpressionMatcher(expression='a{b(c[d]e)f}', type=str)
-exercise_one.expression_matcher()
-exercise_one = ExerciseOneExpressionMatcher(expression='a{b(cd]e)f}', type=str)
-exercise_one.expression_matcher()
-exercise_one = ExerciseOneExpressionMatcher(expression='ab(c[d]e)f}', type=str)
-exercise_one.expression_matcher()
 
+def exercise_one():
+    exercise_one = ExerciseOneExpressionMatcher(expression='a{b(c[d]e)f}', type=str)
+    exercise_one.expression_matcher()
+    exercise_one = ExerciseOneExpressionMatcher(expression='a{b(cd]e)f}', type=str)
+    exercise_one.expression_matcher()
+    exercise_one = ExerciseOneExpressionMatcher(expression='ab(c[d]e)f}', type=str)
+    exercise_one.expression_matcher()
+
+
+# example_one()          
+# exercise_one()
