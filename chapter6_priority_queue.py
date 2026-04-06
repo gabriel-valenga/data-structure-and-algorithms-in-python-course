@@ -8,16 +8,16 @@ class PriorityQueue:
         self.values = np.empty(self.capacity, dtype=int)
 
 
-    def __queue_is_empty(self):
+    def queue_is_empty(self):
         return self.number_of_elements == 0
     
 
-    def __queue_is_full(self):
+    def queue_is_full(self):
         return self.number_of_elements == self.capacity
     
 
     def enqueue(self, value):
-        if self.__queue_is_full():
+        if self.queue_is_full():
             print('The queue is full!')
             return 
 
@@ -37,7 +37,7 @@ class PriorityQueue:
 
 
     def dequeue(self):
-        if self.__queue_is_empty():
+        if self.queue_is_empty():
             print('The queue is empty!')
             return 
         value = self.values[self.number_of_elements-1]
@@ -45,9 +45,8 @@ class PriorityQueue:
         return value
 
 
-
     def first(self):
-        if self.__queue_is_empty():
+        if self.queue_is_empty():
             return -1 
         return self.values[self.number_of_elements - 1]
     
@@ -86,8 +85,3 @@ print(queue.first())
 queue.enqueue(5)
 print(queue.return_queue_in_format_of_a_list())
 print(queue.first())
-
-
-
-
-

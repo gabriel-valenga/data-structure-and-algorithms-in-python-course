@@ -9,7 +9,7 @@ class Node():
         print(self.value)
 
 
-class LinkedListsWWithDoubleEnd():
+class LinkedListWithDoubleEnd():
     
     def __init__(self):
         self.first = None
@@ -57,7 +57,7 @@ class LinkedListsWWithDoubleEnd():
             current = current.next
 
 
-test_list = LinkedListsWWithDoubleEnd()
+test_list = LinkedListWithDoubleEnd()
 test_list.insert_at_start(1)
 print(test_list.first)
 print(test_list.last)

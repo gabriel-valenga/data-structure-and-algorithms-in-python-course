@@ -10,16 +10,16 @@ class CircularQueue:
         self.values = np.empty(self.capacity, dtype=int)
 
 
-    def __queue_is_empty(self):
+    def queue_is_empty(self):
         return self.number_of_elements == 0
     
 
-    def __queue_is_full(self):
+    def queue_is_full(self):
         return self.number_of_elements == self.capacity
     
 
     def line_up(self, value):
-        if self.__queue_is_full():
+        if self.queue_is_full():
             print('The queue is full')
             return 
         if self.end == self.capacity - 1:
@@ -30,7 +30,7 @@ class CircularQueue:
 
     
     def dequeue(self):
-        if self.__queue_is_empty():
+        if self.queue_is_empty():
             print("Queue it's already empty")
             return 
         temp = self.values[self.start]
@@ -42,7 +42,7 @@ class CircularQueue:
     
 
     def first(self):
-        if self.__queue_is_empty():
+        if self.queue_is_empty():
             return -1 
         return self.values[self.start]
     
