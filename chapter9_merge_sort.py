@@ -34,4 +34,3 @@ def merge_sort(array:np.array):
 
 test_array = np.array([5, 70, 42, 2, 10])
 test_sorted_array = merge_sort(test_array)
-print('teste')
