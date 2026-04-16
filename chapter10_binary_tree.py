@@ -39,6 +39,18 @@ class BinarySearchTree:
                         return
                     
 
+    # O(log n) = average | O(n) = worst 
+    def search(self, value):
+        current = self.root
+        while current.value != value:
+            if value < current.value:
+                current = current.left
+            else:
+                current = current.right
+            if current is None:
+                return None
+        return current            
+
 tree = BinarySearchTree()
 tree.insert(53)
 tree.insert(30)
@@ -52,3 +64,6 @@ tree.insert(72)
 tree.insert(61)
 tree.insert(84)
 tree.insert(79)
+test_search_72 = tree.search(72)
+test_search_49 = tree.search(49)
+test_search_51 = tree.search(51)
