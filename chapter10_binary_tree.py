@@ -49,7 +49,16 @@ class BinarySearchTree:
                 current = current.right
             if current is None:
                 return None
-        return current            
+        return current          
+
+
+    #root, left, right
+    def preordination(self, node:Node):
+        if node is not None:
+            print(node.value)
+            self.preordination(node.left)
+            self.preordination(node.right)
+
 
 tree = BinarySearchTree()
 tree.insert(53)
@@ -67,3 +76,4 @@ tree.insert(79)
 test_search_72 = tree.search(72)
 test_search_49 = tree.search(49)
 test_search_51 = tree.search(51)
+tree.preordination(tree.root)
