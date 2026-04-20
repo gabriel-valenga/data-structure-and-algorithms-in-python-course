@@ -76,6 +76,37 @@ class BinarySearchTree:
             print(node.value)
 
 
+    def delete(self, value):
+        if self.root is None:
+            print('Empty tree!')
+            return
+        #find node
+        current = self.root
+        father = self.root
+        is_left = True
+        while current.value != value:
+            father = current
+            #left 
+            if value < current.value:
+                is_left = True
+                current = current.left
+            else: #right
+                is_left = False
+                current = current.right
+            if current is None:
+                return False
+        #node to be deleted it's a leaf
+        if current.left is None and current.right is None:
+            if current == self.root:
+                self.root = None
+            elif is_left == True:
+                self.connections.remove(str(father.value) + ' -> ' + str(current.value))
+                father.left = None
+            else:
+                self.connections.remove(str(father.value) + ' -> ' + str(current.value))
+                father.right = None
+
+
 
 tree = BinarySearchTree()
 tree.insert(53)
@@ -101,3 +132,16 @@ print('In order')
 tree.in_order(tree.root)
 print('Post-ordination:')
 tree.post_ordination(tree.root)
+print()
+print('before 9 deletion')
+print(tree.connections)
+tree.delete(9)
+print()
+print('after 9 deletion')
+print(tree.connections)
+tree.delete(79)
+print('after 79 deletion')
+print(tree.connections)
+tree.delete(100)
+print('after trying to delete 100')
+print(tree.connections)
