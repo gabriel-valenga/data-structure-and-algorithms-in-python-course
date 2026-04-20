@@ -53,11 +53,28 @@ class BinarySearchTree:
 
 
     #root, left, right
-    def preordination(self, node:Node):
+    def pre_ordination(self, node:Node):
         if node is not None:
             print(node.value)
-            self.preordination(node.left)
-            self.preordination(node.right)
+            self.pre_ordination(node.left)
+            self.pre_ordination(node.right)
+
+
+    #left, root, right
+    def in_order(self, node:Node):
+        if node is not None:
+            self.in_order(node.left)
+            print(node.value)
+            self.in_order(node.right)
+
+
+    #left, right, root
+    def post_ordination(self, node:Node):
+        if node is not None:
+            self.post_ordination(node.left)
+            self.post_ordination(node.right)
+            print(node.value)
+
 
 
 tree = BinarySearchTree()
@@ -76,4 +93,11 @@ tree.insert(79)
 test_search_72 = tree.search(72)
 test_search_49 = tree.search(49)
 test_search_51 = tree.search(51)
-tree.preordination(tree.root)
+print()
+print('Pre-ordination:')
+tree.pre_ordination(tree.root)
+print()
+print('In order')
+tree.in_order(tree.root)
+print('Post-ordination:')
+tree.post_ordination(tree.root)
