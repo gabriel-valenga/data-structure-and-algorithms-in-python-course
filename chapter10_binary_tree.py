@@ -105,6 +105,65 @@ class BinarySearchTree:
             else:
                 self.connections.remove(str(father.value) + ' -> ' + str(current.value))
                 father.right = None
+        #node to be deleted doesn't have nodes at right
+        elif current.right is None:
+            self.connections.remove(str(father.value) + ' -> ' + str(current.value))
+            self.connections.remove(str(father.value) + ' -> ' + str(current.left.value))
+            if current == self.root:
+                self.root = current.left
+                self.connections.append(str(father.value) + ' -> ' + str(current.left.value))
+            elif is_left:
+                father.left = current.left
+                self.connections.append(str(father.value) + ' -> ' + str(current.left.value))
+            else:
+                father.right = current.left
+                self.connections.append(str(father.value) + ' -> ' + str(current.left.value))
+        #node to be deleted doesn't have nodes at left
+        elif current.left is None:
+            self.connections.remove(str(father.value) + ' -> ' + str(current.value))
+            self.connections.remove(str(father.value) + ' -> ' + str(current.right.value))
+            if current == self.root:
+                self.root = current.right
+                self.connections.append(str(father.value) + ' -> ' + str(current.right.value))
+            elif is_left:
+                father.left = current.right
+                self.connections.append(str(father.value) + ' -> ' + str(current.right.value))
+            else:
+                father.right = current.right
+                self.connections.append(str(father.value) + ' -> ' + str(current.right.value))
+        else: #node has 2 children
+            successor = self.get_successor(current)
+            self.connections.remove(str(father.value) + ' -> ' + str(current.value))
+            self.connections.remove(str(current.right.value) + ' -> ' + str(successor.value)) #to-do: Bug on this line while trying to delete 39
+            self.connections.remove(str(current.value) + ' -> ' + str(current.left.value))
+            self.connections.remove(str(current.value) + ' -> ' + str(current.right.value))
+            if current == current.root:
+                self.connections.append(str(self.root.value) + ' -> ' + str(successor.value))
+                self.root = successor
+            elif is_left:
+                self.connections.append(str(father.value) + ' -> ' + str(successor.value))
+                father.left = successor
+            else:
+                self.connections.append(str(father.value) + ' -> ' + str(successor.value))
+                father.right = successor
+            self.connections.append(str(successor.value) + ' -> ' + str(current.left.value))
+            self.connections.append(str(successor.value) + ' -> ' + str(current.right.value))
+            successor.left = current.left
+        return True
+
+
+    def get_successor(self, node:Node):
+        father_successor = node
+        successor = node
+        current = node.right
+        while current != None:
+            father_successor = successor
+            successor = current
+            current = current.left
+        if successor != node.right:
+            father_successor.left = successor.right
+            successor.right = node.right
+        return successor
 
 
 
@@ -144,4 +203,9 @@ print('after 79 deletion')
 print(tree.connections)
 tree.delete(100)
 print('after trying to delete 100')
+print(tree.connections)
+print(f'53 successor: {tree.get_successor(tree.root).value}')
+print('before delete 39')
+tree.delete(39) #ug line 137
+print('after trying to delete 39')
 print(tree.connections)
