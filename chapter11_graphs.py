@@ -1,3 +1,6 @@
+from chapter6_stack import Stack
+
+
 class Vertex:
     def __init__(self, label):
         self.label = label
@@ -83,6 +86,37 @@ class CitiesOfRomaniaGraphExample:
     bucharest.add_adjacent(adjacent=Adjacent(vertex=giurgiu, cost=90))
 
 
+class InDepthSearch:
+    def __init__(self, start):
+        self.start = start
+        self.start.visited = True
+        self.stack = Stack(size=20, type=object)
+        self.stack.push_value(start)
+
+    
+    def search(self):
+        top = self.stack.top()
+        print(f'Top: {top.label}')
+        for adjacent in top.adjacents:
+            print(f'Stack top: {top.label}. {adjacent.vertex.label} already visited? {adjacent.vertex.visited}')
+            if not adjacent.vertex.visited:
+                adjacent.vertex.visited = True
+                self.stack.push_value(adjacent.vertex)
+                print(f'Stacked {adjacent.vertex.label}')
+                self.search()
+        print(f'Unstacked {self.stack.pop_value_from_the_top().label}')
+        print()
+
+
+
 romania_cities = CitiesOfRomaniaGraphExample()
 romania_cities.arad.show_adjacents()
 romania_cities.bucharest.show_adjacents()
+stack = Stack(size=5, type=object)
+stack.push_value(romania_cities.arad)
+stack.push_value(romania_cities.sibiu)
+stack.push_value(romania_cities.timisoara)
+print(stack.top().label)
+print(stack.pop_value_from_the_top().label)
+in_depth_search = InDepthSearch(start=romania_cities.arad)
+in_depth_search.search()

@@ -35,8 +35,11 @@ class Stack:
     def pop_value_from_the_top(self):
         if self.stack_is_empty():
             print("Stack is empty. Cannot pop value.")
+            return None
         else:
+            temp = self.__values[self.__top]
             self.__top -= 1
+            return temp
         
 
     def top(self):
