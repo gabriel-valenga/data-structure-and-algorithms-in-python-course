@@ -7,7 +7,7 @@ class CircularQueue:
         self.start = 0
         self.end = -1
         self.number_of_elements = 0
-        self.values = np.empty(self.capacity, dtype=int)
+        self.values = np.empty(self.capacity, dtype=object)
 
 
     def queue_is_empty(self):
@@ -51,34 +51,35 @@ class CircularQueue:
         return self.values.tolist()
     
 
-queue = CircularQueue(5)
-queue.dequeue()
-queue.line_up(1)
-print(queue.return_queue_in_format_of_a_list())
-queue.line_up(2)
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.line_up(3)
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.line_up(4)
-print(queue.return_queue_in_format_of_a_list())
-queue.line_up(5)
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.line_up(6)
-queue.dequeue()
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.dequeue()
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.line_up(6)
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
-queue.line_up(7)
-print(queue.return_queue_in_format_of_a_list())
-print(f'first element of queue: {queue.first()}')
+def circular_queue_example():
+    queue = CircularQueue(5)
+    queue.dequeue()
+    queue.line_up(1)
+    print(queue.return_queue_in_format_of_a_list())
+    queue.line_up(2)
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.line_up(3)
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.line_up(4)
+    print(queue.return_queue_in_format_of_a_list())
+    queue.line_up(5)
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.line_up(6)
+    queue.dequeue()
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.dequeue()
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.line_up(6)
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
+    queue.line_up(7)
+    print(queue.return_queue_in_format_of_a_list())
+    print(f'first element of queue: {queue.first()}')
 
 
 

@@ -1,3 +1,4 @@
+from chapter6_circular_queue import CircularQueue
 from chapter6_stack import Stack
 
 
@@ -108,15 +109,53 @@ class InDepthSearch:
         print()
 
 
+class WidthForceSearch:
+    
+    def __init__(self, start):
+        self.start = start
+        self.start.visited = True
+        self.queue = CircularQueue(20)
+        self.queue.line_up(start)
+
+
+    def search(self):
+        first = self.queue.first()
+        print()
+        print(f'First: {first.label}')
+        temp = self.queue.dequeue()
+        print(f'{temp.label} dequeued')
+        for adjacent in first.adjacents:
+            print(f'First was {temp.label}. Was {adjacent.vertex.label} visited? {adjacent.vertex.visited}')
+            if not adjacent.vertex.visited:
+                adjacent.vertex.visited = True
+                self.queue.line_up(adjacent.vertex)
+                print(f'Lined up: {adjacent.vertex.label}')
+        if self.queue.number_of_elements > 0:
+            self.search()
+
 
 romania_cities = CitiesOfRomaniaGraphExample()
-romania_cities.arad.show_adjacents()
-romania_cities.bucharest.show_adjacents()
-stack = Stack(size=5, type=object)
-stack.push_value(romania_cities.arad)
-stack.push_value(romania_cities.sibiu)
-stack.push_value(romania_cities.timisoara)
-print(stack.top().label)
-print(stack.pop_value_from_the_top().label)
-in_depth_search = InDepthSearch(start=romania_cities.arad)
-in_depth_search.search()
+
+def in_depth_search_example():
+    stack = Stack(size=5, type=object)
+    stack.push_value(romania_cities.arad)
+    stack.push_value(romania_cities.sibiu)
+    stack.push_value(romania_cities.timisoara)
+    print(stack.top().label)
+    print(stack.pop_value_from_the_top().label)
+    in_depth_search = InDepthSearch(start=romania_cities.arad)
+    in_depth_search.search()
+
+
+def width_force_search_sample_test(self):
+    queue = CircularQueue(20)
+    queue.line_up(romania_cities.arad)
+    queue.line_up(romania_cities.bucharest)
+    queue.line_up(romania_cities.fagaras)
+    print(queue.first().label)
+    print(queue.dequeue().label)
+    print(queue.first().label)
+
+
+width_force_search_test = WidthForceSearch(start=romania_cities.arad)
+width_force_search_test.search()
