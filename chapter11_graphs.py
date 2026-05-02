@@ -1,11 +1,13 @@
 from chapter6_circular_queue import CircularQueue
 from chapter6_stack import Stack
+from chapter5_sorted_arrrays import SortedArray
 
 
 class Vertex:
-    def __init__(self, label):
+    def __init__(self, label, destination_distance=None):
         self.label = label
         self.visited = False
+        self.destination_distance = destination_distance
         self.adjacents = []
 
     
@@ -87,6 +89,69 @@ class CitiesOfRomaniaGraphExample:
     bucharest.add_adjacent(adjacent=Adjacent(vertex=giurgiu, cost=90))
 
 
+class CitiesOfRomaniaStraightLineDistanceGraphExample:
+    arad = Vertex(label='Arad', destination_distance=366)
+    zerind = Vertex(label='Zerind', destination_distance=374)
+    oradea = Vertex(label='Oradea', destination_distance=380)
+    sibiu = Vertex(label='Sibiu', destination_distance=253)
+    timisoara = Vertex(label='Timisoara', destination_distance=329)
+    lugoj = Vertex(label='Lugoj', destination_distance=244)
+    mehadia = Vertex(label='Mehadia', destination_distance=241)
+    dobreta = Vertex(label='Dobreta', destination_distance=242)
+    craiova = Vertex(label='Craiova', destination_distance=160)
+    rimnicu = Vertex(label='Rimnicu', destination_distance=193)
+    fagaras = Vertex(label='Fagaras', destination_distance=178)
+    pitesti = Vertex(label='Pitesti', destination_distance=98)
+    bucharest = Vertex(label='Bucharest', destination_distance=0)
+    giurgiu = Vertex(label='Giurgiu', destination_distance=77)
+
+    arad.add_adjacent(adjacent=Adjacent(vertex=zerind, cost=75))
+    arad.add_adjacent(adjacent=Adjacent(vertex=sibiu, cost=140))
+    arad.add_adjacent(adjacent=Adjacent(vertex=timisoara, cost=118))
+
+    zerind.add_adjacent(adjacent=Adjacent(vertex=arad, cost=75))
+    zerind.add_adjacent(adjacent=Adjacent(vertex=oradea, cost=71))
+
+    oradea.add_adjacent(adjacent=Adjacent(vertex=zerind, cost=71))
+    oradea.add_adjacent(adjacent=Adjacent(vertex=sibiu, cost=151))
+
+    sibiu.add_adjacent(adjacent=Adjacent(vertex=oradea, cost=151))
+    sibiu.add_adjacent(adjacent=Adjacent(vertex=arad, cost=140))
+    sibiu.add_adjacent(adjacent=Adjacent(vertex=fagaras, cost=99))
+    sibiu.add_adjacent(adjacent=Adjacent(vertex=rimnicu, cost=80))
+
+    timisoara.add_adjacent(adjacent=Adjacent(vertex=arad, cost=118))
+    timisoara.add_adjacent(adjacent=Adjacent(vertex=lugoj, cost=111))
+
+    lugoj.add_adjacent(adjacent=Adjacent(vertex=timisoara, cost=111))
+    lugoj.add_adjacent(adjacent=Adjacent(vertex=mehadia, cost=70))
+
+    mehadia.add_adjacent(adjacent=Adjacent(vertex=lugoj, cost=70))
+    mehadia.add_adjacent(adjacent=Adjacent(vertex=dobreta, cost=75))
+
+    dobreta.add_adjacent(adjacent=Adjacent(vertex=mehadia, cost=75))
+    dobreta.add_adjacent(adjacent=Adjacent(vertex=craiova, cost=120))
+
+    craiova.add_adjacent(adjacent=Adjacent(vertex=dobreta, cost=120))
+    craiova.add_adjacent(adjacent=Adjacent(vertex=pitesti, cost=138))
+    craiova.add_adjacent(adjacent=Adjacent(vertex=rimnicu, cost=146))
+
+    rimnicu.add_adjacent(adjacent=Adjacent(vertex=craiova, cost=146))
+    rimnicu.add_adjacent(adjacent=Adjacent(vertex=sibiu, cost=80))
+    rimnicu.add_adjacent(adjacent=Adjacent(vertex=pitesti, cost=97))
+
+    fagaras.add_adjacent(adjacent=Adjacent(vertex=sibiu, cost=99))
+    fagaras.add_adjacent(adjacent=Adjacent(vertex=bucharest, cost=211))
+
+    pitesti.add_adjacent(adjacent=Adjacent(vertex=rimnicu, cost=97))
+    pitesti.add_adjacent(adjacent=Adjacent(vertex=craiova, cost=138))
+    pitesti.add_adjacent(adjacent=Adjacent(vertex=bucharest, cost=101))
+
+    bucharest.add_adjacent(adjacent=Adjacent(vertex=fagaras, cost=211))
+    bucharest.add_adjacent(adjacent=Adjacent(vertex=pitesti, cost=101))
+    bucharest.add_adjacent(adjacent=Adjacent(vertex=giurgiu, cost=90))
+
+
 class InDepthSearch:
     def __init__(self, start):
         self.start = start
@@ -110,7 +175,7 @@ class InDepthSearch:
 
 
 class WidthForceSearch:
-    
+
     def __init__(self, start):
         self.start = start
         self.start.visited = True
@@ -134,7 +199,60 @@ class WidthForceSearch:
             self.search()
 
 
+class GreedySearch:
+
+    class SortedArray(SortedArray):
+
+        def insert(self, value):
+            if self.last_position == self.size - 1: #O(1)
+                print("Array is full")
+            else:
+                position = 0
+                for i in range(self.last_position + 1): #O(n)
+                    position = i
+                    if self.values[i].destination_distance > value.destination_distance:
+                        break
+                    if i == self.last_position:
+                        position = i + 1    
+                x = self.last_position
+                while x >= position:    
+                    self.values[x + 1] = self.values[x]
+                    x -= 1
+                self.values[position] = value
+                self.last_position += 1
+
+
+        def print_values(self):
+            if self.last_position == -1:
+                print("Array is empty")
+            else:
+                for i in range(self.last_position + 1):
+                    print(i, " - ", self.values[i].label, " - ", self.values[i].destination_distance)
+                print()
+
+    def __init__(self, destination):
+        self.destination = destination
+        self.found = False
+
+
+    def search(self, current):
+        print()
+        print(f'Current: {current.label}')
+        current.visited = True
+        if current == self.destination:
+            self.found = True
+        else:
+            sorted_array = self.SortedArray(size=len(current.adjacents))
+            for adjacent in current.adjacents:
+                if not adjacent.vertex.visited:
+                    adjacent.vertex.visited = True
+                    sorted_array.insert(adjacent.vertex)
+            sorted_array.print_values()
+            if sorted_array.values[0] is not None:
+                self.search(sorted_array.values[0])
+
 romania_cities = CitiesOfRomaniaGraphExample()
+romania_cities_straight_line_distance = CitiesOfRomaniaStraightLineDistanceGraphExample()
 
 def in_depth_search_example():
     stack = Stack(size=5, type=object)
@@ -157,5 +275,25 @@ def width_force_search_sample_test(self):
     print(queue.first().label)
 
 
-width_force_search_test = WidthForceSearch(start=romania_cities.arad)
-width_force_search_test.search()
+def width_force_search_example():
+    width_force_search_test = WidthForceSearch(start=romania_cities.arad)
+    width_force_search_test.search()
+
+
+def greedy_search_sample_test():
+    array = GreedySearch.SortedArray(5)
+    array.insert(romania_cities_straight_line_distance.arad)
+    array.insert(romania_cities_straight_line_distance.craiova)
+    array.insert(romania_cities_straight_line_distance.bucharest)
+    array.insert(romania_cities_straight_line_distance.dobreta)
+    array.print_values()
+    array.insert(romania_cities_straight_line_distance.lugoj)
+    array.print_values()
+
+
+def greedy_search_example():
+    greedy_search = GreedySearch(romania_cities_straight_line_distance.bucharest)
+    greedy_search.search(romania_cities_straight_line_distance.arad)
+
+
+greedy_search_example()
