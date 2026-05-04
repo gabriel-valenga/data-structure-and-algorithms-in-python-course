@@ -21,9 +21,13 @@ class Vertex:
 
 
 class Adjacent:
-    def __init__(self, vertex, cost):
+    def __init__(self, vertex, cost = 0):
         self.vertex = vertex
         self.cost = cost
+        self.a_star_distance = 0
+        if self.vertex.destination_distance and self.cost:
+            self.a_star_distance = self.vertex.destination_distance + self.cost
+
 
 
 class CitiesOfRomaniaGraphExample:
@@ -251,6 +255,71 @@ class GreedySearch:
             if sorted_array.values[0] is not None:
                 self.search(sorted_array.values[0])
 
+
+class AStarSearch:
+
+    class SortedArray(SortedArray):
+
+        def insert(self, adjacent):
+            if self.last_position == self.size - 1: #O(1)
+                print("Array is full")
+            else:
+                position = 0
+                for i in range(self.last_position + 1): #O(n)
+                    position = i
+                    if self.values[i].a_star_distance > adjacent.a_star_distance:
+                        break
+                    if i == self.last_position:
+                        position = i + 1    
+                x = self.last_position
+                while x >= position:    
+                    self.values[x + 1] = self.values[x]
+                    x -= 1
+                self.values[position] = adjacent
+                self.last_position += 1
+
+
+        def print_values(self):
+            if self.last_position == -1:
+                print("Array is empty")
+            else:
+                for i in range(self.last_position + 1):
+                    print(
+                        i, 
+                        " - ", 
+                        self.values[i].vertex.label, 
+                        " - ",
+                        self.values[i].cost,
+                        " - ", 
+                        self.values[i].vertex.destination_distance,
+                        " - ",
+                        self.values[i].a_star_distance
+                    )
+                print()
+
+    
+    def __init__(self, destination):
+        self.destination = destination
+        self.found = False
+
+
+    def search(self, current):
+        print()
+        print(f'Current: {current.label}')
+        current.visited = True
+        if current == self.destination:
+            self.found = True
+        else:
+            sorted_array = self.SortedArray(len(current.adjacents))
+            for adjacent in current.adjacents:
+                if not adjacent.vertex.visited:
+                    adjacent.vertex.visited = True
+                    sorted_array.insert(adjacent)
+            sorted_array.print_values() 
+            if sorted_array.values[0]:
+                self.search(sorted_array.values[0].vertex)
+
+        
 romania_cities = CitiesOfRomaniaGraphExample()
 romania_cities_straight_line_distance = CitiesOfRomaniaStraightLineDistanceGraphExample()
 
@@ -296,4 +365,16 @@ def greedy_search_example():
     greedy_search.search(romania_cities_straight_line_distance.arad)
 
 
-greedy_search_example()
+def a_star_search_sample_test():
+    array = AStarSearch.SortedArray(3)
+    array.insert(romania_cities_straight_line_distance.arad.adjacents[0])
+    array.insert(romania_cities_straight_line_distance.arad.adjacents[1])
+    array.insert(romania_cities_straight_line_distance.arad.adjacents[2])
+    array.print_values()
+
+
+def a_star_search_example():
+    a_star_search = AStarSearch(destination=romania_cities_straight_line_distance.bucharest)
+    a_star_search.search(romania_cities_straight_line_distance.arad)
+
+a_star_search_example()
