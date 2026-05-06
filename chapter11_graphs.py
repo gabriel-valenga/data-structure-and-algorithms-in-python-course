@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 
 from chapter6_circular_queue import CircularQueue
@@ -323,6 +325,45 @@ class AStarSearch:
 
         
 class Djikstra():
+    def __init__(self, vertices, edges, start):
+        self.length = len(vertices)
+        self.vertices = vertices
+        self.graph = edges
+        self.start = start
+
+
+    def show_solution(self, distances):
+        print(f'Lower distances from {self.vertices[self.start]} to all others:')
+        for vertice in range(self.length):
+            print(self.vertices[vertice], distances[vertice])
+
+
+    def minimum_distance(self, distance, visited):
+        minimum = sys.maxsize
+        # minimum_index = None
+        for vertex in range(self.length):
+            if distance[vertex] < minimum and visited[vertex] == False:
+                minimum = distance[vertex]
+                minimum_index = vertex
+        return minimum_index
+
+
+    def calculate_dijkstra(self):
+        distance = [sys.maxsize] * self.length
+        distance[self.start] = 0
+        visited = [False] * self.length
+        for _ in range(self.length):
+            minimum_index = self.minimum_distance(distance=distance, visited=visited)
+            visited[minimum_index] = True
+            for vertex in range(self.length):
+                sum_distance_minimum_index_graph_minimum_index_vertex = distance[minimum_index] + self.graph[minimum_index][vertex]
+                if self.graph[minimum_index][vertex] > 0 and not visited[vertex] \
+                    and distance[vertex] > sum_distance_minimum_index_graph_minimum_index_vertex:
+                    distance[vertex] = sum_distance_minimum_index_graph_minimum_index_vertex
+        self.show_solution(distance)
+            
+
+class CitiesOfRomaniaVerticesAndEdges():
     vertices = {
         'arad': 0, 'zerind': 1, 'oradea': 2, 'sibiu': 3, 'timisoara': 4,
         'lugoj': 5, 'mehadia': 6, 'dobreta': 7, 'craiova': 8, 'rimnicu': 9,
@@ -426,3 +467,14 @@ def a_star_search_example():
     a_star_search = AStarSearch(destination=romania_cities_straight_line_distance.bucharest)
     a_star_search.search(romania_cities_straight_line_distance.arad)
 
+
+def djikstra_example():
+    cities_of_romania_vertices_and_edges = CitiesOfRomaniaVerticesAndEdges()
+    djikstra = Djikstra(
+        vertices=cities_of_romania_vertices_and_edges.cities,
+        edges=cities_of_romania_vertices_and_edges.edges,
+        start=cities_of_romania_vertices_and_edges.vertices['arad']
+    )
+    djikstra.calculate_dijkstra()
+
+djikstra_example()
